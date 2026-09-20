@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>Desenvolvimento 90D</title>
+<style>
+:root{--bg:#f1f5f9;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#0f172a;--green:#15803d;--blue:#2563eb;--orange:#ea580c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,Segoe UI,Roboto,Arial}
+header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:22px 16px 18px;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:24px}header p{margin:5px 0 0;color:#cbd5e1}
+nav{display:flex;gap:7px;overflow:auto;padding:10px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:80px;z-index:9}
+nav button{white-space:nowrap;border:0;background:#e2e8f0;color:#334155;border-radius:999px;padding:9px 13px;font-weight:700}
+nav button.active{background:#0f172a;color:#fff}
+main{max-width:950px;margin:auto;padding:14px}
+.page{display:none}.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:13px;box-shadow:0 3px 12px #0f172a0a}
+h2{font-size:19px;margin:0 0 12px}.sub{color:var(--muted);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.kpi{padding:13px;border:1px solid var(--line);border-radius:14px}.kpi b{font-size:22px}.kpi small{display:block;color:var(--muted)}
+.progress{height:11px;background:#e2e8f0;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--green);width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}
+.lesson{border:1px solid var(--line);border-radius:14px;padding:12px}.lesson b{display:block;margin-bottom:4px}
+.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;background:#e2e8f0}.bi{background:#dbeafe;color:#1d4ed8}.sql{background:#dcfce7;color:#166534}.py{background:#ffedd5;color:#c2410c}
+ul{padding-left:20px;margin:8px 0}li{margin:5px 0}
+table{width:100%;border-collapse:collapse}th,td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}.check input{width:20px;height:20px;accent-color:#15803d}
+button.action{background:#0f172a;color:#fff;border:0;border-radius:11px;padding:10px 13px;font-weight:800}button.secondary{background:#e2e8f0;color:#0f172a;border:0;border-radius:11px;padding:10px 13px;font-weight:800}
+textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit}
+.notice{border-left:4px solid var(--blue);background:#eff6ff;padding:11px 13px;border-radius:8px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.kpi:last-child{grid-column:1/-1}nav{top:76px}main{padding:10px}}
+</style>
+</head>
+<body>
+<header>
+<h1>🚀 Desenvolvimento 90D</h1>
+<p>21/09/2026 → 19/12/2026 • Power BI → SQL → Python</p>
+</header>
+<nav id="nav">
+<button class="active" data-page="inicio">Início</button>
+<button data-page="estudos">Estudos</button>
+<button data-page="semana">Semana</button>
+<button data-page="check">Check-in</button>
+<button data-page="leitura">Leitura</button>
+</nav>
+
+<main>
+<section id="inicio" class="page active">
+<div class="card">
+<h2>🎯 Objetivo dos 90 dias</h2>
+<p>Construir uma base prática em <b>Power BI</b>, seguida de <b>SQL</b> e depois <b>Python</b>, usando problemas reais de cobrança, faturamento e arrecadação como laboratório.</p>
+<div class="notice"><b>Regra:</b> estudar para produzir. Cada etapa deve gerar algo que você consiga mostrar, explicar ou aplicar.</div>
+</div>
+<div class="card">
+<h2>📊 Painel</h2>
+<div class="kpis">
+<div class="kpi"><b id="dayCount">1</b><small>dia do ciclo</small></div>
+<div class="kpi"><b id="studyHours">0h</b><small>estudo registrado</small></div>
+<div class="kpi"><b id="streak">0</b><small>check-ins completos</small></div>
+</div>
+<p class="sub" style="margin-top:12px">Progresso dos 90 dias</p><div class="progress"><i id="overall"></i></div><p id="overallText" class="sub"></p>
+</div>
+<div class="card">
+<h2>⏰ Rotina-base</h2>
+<table>
+<tr><th>Horário</th><th>Atividade</th></tr>
+<tr><td>04:45</td><td>Acordar</td></tr><tr><td>05:00–06:00</td><td>Treino</td></tr>
+<tr><td>06:40–07:30</td><td>Deslocamento</td></tr><tr><td>08:00–18:00</td><td>Trabalho</td></tr>
+<tr><td>18:00–18:50</td><td>Deslocamento</td></tr><tr><td>19:40–20:30</td><td><b>Estudo</b></td></tr>
+<tr><td>20:30–20:50</td><td>Leitura</td></tr><tr><td>22:45–04:45</td><td><b>😴 Sono — 7h15</b></td></tr>
+</table>
+</div>
+</section>
+
+<section id="estudos" class="page">
+<div class="card">
+<h2>📚 Trilha técnica — 90 dias</h2>
+<p class="sub">Prioridade: Power BI → SQL → Python. Segunda a sexta: 45 min. Sábado: 1h30–2h. Domingo: 30 min de revisão.</p>
+<div class="grid">
+<div class="lesson"><span class="badge bi">POWER BI</span><b>Dias 1–42</b>Fundamentos, Power Query, modelagem, DAX e dashboards.</div>
+<div class="lesson"><span class="badge sql">SQL</span><b>Dias 43–70</b>SELECT, filtros, JOINs, agregações, CTEs, funções e consultas de cobrança.</div>
+<div class="lesson"><span class="badge py">PYTHON</span><b>Dias 71–90</b>Python para dados: pandas, limpeza, análise e automação.</div>
+</div>
+</div>
+<div class="card">
+<h2>🧭 Conteúdo por fase</h2>
+<table>
+<tr><th>Período</th><th>Foco</th><th>Entrega</th></tr>
+<tr><td>21/09–04/10</td><td>BI: interface, importação, Power Query básico</td><td>Base tratada + primeiro relatório</td></tr>
+<tr><td>05/10–18/10</td><td>BI: modelagem, relacionamentos, calendário</td><td>Modelo estrela funcional</td></tr>
+<tr><td>19/10–01/11</td><td>BI: DAX básico/intermediário</td><td>Medidas de volume, dívida e recuperação</td></tr>
+<tr><td>02/11–01/11*</td><td>BI: dashboards, filtros, storytelling e revisão</td><td>Dashboard executivo</td></tr>
+<tr><td>02/11–15/11</td><td>SQL: SELECT, WHERE, CASE, ORDER BY</td><td>Consultas básicas</td></tr>
+<tr><td>16/11–29/11</td><td>SQL: GROUP BY, JOIN, subqueries, CTE</td><td>Consulta consolidada</td></tr>
+<tr><td>30/11–19/12</td><td>Python: sintaxe, pandas, limpeza, análise</td><td>Notebook/análise automatizada</td></tr>
+</table>
+<p class="sub">*A faixa é ajustada para manter o ciclo de 90 dias; use o número da semana abaixo como referência principal.</p>
+</div>
+<div class="card">
+<h2>🏁 Resultado esperado no dia 90</h2>
+<ul>
+<li>Construir um dashboard de Power BI do início ao fim.</li>
+<li>Explicar modelagem, relacionamentos e principais medidas DAX.</li>
+<li>Consultar e cruzar bases usando SQL com segurança.</li>
+<li>Usar Python/pandas para limpeza e análise de dados.</li>
+<li>Ter pelo menos <b>1 projeto integrado BI + SQL + Python</b>.</li>
+</ul>
+</div>
+</section>
+
+<section id="semana" class="page">
+<div class="card">
+<h2>🗓️ Semana atual</h2>
+<p><b>Semana 1 — 21 a 27/09</b></p>
+<table>
+<tr><th>Dia</th><th>45 min de estudo</th></tr>
+<tr><td>Seg 21</td><td><span class="badge bi">BI</span> Conhecer Power BI Desktop + importar uma base</td></tr>
+<tr><td>Ter 22</td><td><span class="badge bi">BI</span> Power Query: tipos, nomes e remoção de erros</td></tr>
+<tr><td>Qua 23</td><td><span class="badge bi">BI</span> Power Query: colunas, filtros e transformações</td></tr>
+<tr><td>Qui 24</td><td><span class="badge bi">BI</span> Criar tabela fato/dimensão e entender modelo</td></tr>
+<tr><td>Sex 25</td><td><span class="badge bi">BI</span> Primeiro visual: volume, valor e produtividade</td></tr>
+<tr><td>Sáb 26</td><td><span class="badge bi">BI</span> 1h30–2h: montar seu primeiro mini-dashboard</td></tr>
+<tr><td>Dom 27</td><td>30 min: revisar, anotar dúvidas e planejar semana 2</td></tr>
+</table>
+</div>
+<div class="card">
+<h2>🔁 Regra de cada sessão</h2>
+<ol>
+<li><b>5 min:</b> revisar o que fez anteriormente.</li>
+<li><b>25 min:</b> aprender/praticar.</li>
+<li><b>10 min:</b> construir algo sem copiar.</li>
+<li><b>5 min:</b> registrar o que aprendeu e a dúvida principal.</li>
+</ol>
+</div>
+</section>
+
+<section id="check" class="page">
+<div class="card">
+<h2>✅ Check-in de hoje</h2>
+<p class="sub">Seu objetivo é acumular consistência, não perfeição.</p>
+<div id="checks"></div>
+<p id="checkPct" class="sub"></p>
+<button class="secondary" onclick="resetToday()">Zerar hoje</button>
+</div>
+<div class="card">
+<h2>📝 Diário de desenvolvimento</h2>
+<textarea id="note" placeholder="O que aprendi hoje? O que consegui aplicar? Qual foi minha principal dificuldade?"></textarea>
+</div>
+</section>
+
+<section id="leitura" class="page">
+<div class="card">
+<h2>📖 Leitura</h2>
+<p><b>Livro principal:</b> Como Desfrutar sua Vida e seu Trabalho — Dale Carnegie.</p>
+<p>Meta: <b>20 min por dia</b>, preferencialmente 20h15–20h35.</p>
+<div class="notice">Não tente terminar rápido. Ao final de cada sessão, registre <b>uma ideia + uma aplicação para amanhã</b>.</div>
+</div>
+<div class="card">
+<h2>📚 Sequência depois do Carnegie</h2>
+<ol>
+<li>100 Coisas que Pessoas Produtivas Fazem</li>
+<li>Liderar é Influenciar</li>
+<li>Gente que Convence</li>
+<li>Estratégias de Gestão</li>
+<li>Depois, leituras complementares</li>
+</ol>
+</div>
+</section>
+</main>
+<footer>Desenvolvimento 90D • dados salvos no navegador deste aparelho</footer>
+
+<script>
+const START=new Date('2026-09-21T00:00:00');
+const KEY='desenvolvimento90d-v2';
+let data=JSON.parse(localStorage.getItem(KEY)||'{}');
+const labels=['Acordei às 04:45','Treinei','Trabalhei com foco','Estudei 45 min','Li 20 min','Registrei o aprendizado','Comecei a desacelerar às 21:00'];
+function dayKey(){let d=new Date();return d.toISOString().slice(0,10)}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function renderChecks(){
+ const k=dayKey(); data[k]=data[k]||{}; const box=document.getElementById('checks');box.innerHTML='';
+ labels.forEach((l,i)=>{let row=document.createElement('label');row.className='check';let c=document.createElement('input');c.type='checkbox';c.checked=!!data[k]['c'+i];c.onchange=()=>{data[k]['c'+i]=c.checked;save();renderChecks();updateDashboard()};let s=document.createElement('span');s.textContent=l;row.append(c,s);box.append(row)});
+ let n=labels.filter((_,i)=>data[k]['c'+i]).length;document.getElementById('checkPct').textContent=Math.round(n/labels.length*100)+'% concluído hoje';
+}
+function resetToday(){data[dayKey()]={};save();renderChecks();updateDashboard()}
+document.getElementById('note').value=(data[dayKey()]||{}).note||'';
+document.getElementById('note').oninput=e=>{data[dayKey()]=data[dayKey()]||{};data[dayKey()].note=e.target.value;save()}
+function updateDashboard(){
+ let now=new Date();let diff=Math.max(0,Math.floor((now-START)/86400000)+1);diff=Math.min(90,diff);
+ document.getElementById('dayCount').textContent=diff;
+ let complete=0;Object.keys(data).forEach(k=>{if(k.match(/^2026-/)){let n=labels.filter((_,i)=>data[k]['c'+i]).length;if(n===labels.length)complete++}});
+ document.getElementById('streak').textContent=complete;
+ document.getElementById('studyHours').textContent=(complete*0.75).toFixed(1)+'h';
+ let pct=Math.round(diff/90*100);document.getElementById('overall').style.width=pct+'%';document.getElementById('overallText').textContent=pct+'% do ciclo transcorrido';
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active')});
+renderChecks();updateDashboard();
+</script>
+</body>
+</html>
